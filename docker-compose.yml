@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+    db:
+        container_name: arl_db
+        restart: always
+        image: mongo:4.2-bionic
+        volumes:
+            - ./mongodb/:/data/db/
+        networks:
+            - backbone
+    backend:
+        container_name: arl_backend
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
+        volumes:
+            - ./backend/public/:/usr/src/app/public/
+            - ./backend/index.js:/usr/src/app/index.js
+        depends_on:
+            - db
+        networks:
+            - backbone
+networks:
+    backbone:
+        name: backbone-net
