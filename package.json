@@ -1,0 +1,22 @@
+{
+  "name": "arl-today",
+  "version": "1.0.0",
+  "description": "## Problem ปัญหาความไม่เที่ยงตรงของตารางเวลาเดินรถ Airport Rail Link ทำให้เกิดความล่าช้าระหว่างการเดินทาง",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoukHin/ARL-today.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/LoukHin/ARL-today/issues"
+  },
+  "homepage": "https://github.com/LoukHin/ARL-today#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
