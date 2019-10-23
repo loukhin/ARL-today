@@ -4,8 +4,11 @@ services:
         container_name: arl_db
         restart: always
         image: mongo:4.2-bionic
+        ports:
+            - "27017:27017"
         volumes:
             - ./mongodb/:/data/db/
+        command: mongod --auth
         networks:
             - backbone
     backend:
