@@ -1,7 +1,11 @@
 <template>
     <div>
-        <Mobile class="hidden-md-up"></Mobile>
-        <Desktop class="hidden-lg-down"></Desktop>
+        <div class="d-block d-md-none">
+            <Mobile></Mobile>
+        </div>
+        <div class="d-none d-md-block">
+            <Desktop></Desktop>
+        </div>
     </div>
 </template>
 <script>
