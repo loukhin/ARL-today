@@ -3,15 +3,16 @@
         <div id="app-header" class="container-fluid py-3">
             <div class="container text-center mt-4">
                 <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
-                <div class="my-4">
+                <div class="my-4" v-if="trainTo !== null && nextStation !== null">
                     <div class="display-4 font-weight-lighter">10:00</div>
-                    <div class="font-weight-light">Next station : Ladkrabang</div>
+                    <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
+                    <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
                 </div>
                 <div class="row">
                     <div class="col-12 mt-2 mb-n5">
                         <div id="app-box" class="bg-light rounded shadow px-4 py-3">
                             <multiselect
-                                placeholder="สถานีเริ่มต้น"
+                                placeholder="Current"
                                 v-model="station.from"
                                 :options="station.options"
                                 label="text"
@@ -21,8 +22,8 @@
                             >
                             </multiselect>
                             <multiselect
-                                class="mt-2"
-                                placeholder="สถานีปลายทาง"
+                                class="my-2"
+                                placeholder="Destination"
                                 v-model="station.to"
                                 :options="station.options"
                                 label="text"
@@ -31,6 +32,7 @@
                                 :allowEmpty="false"
                             >
                             </multiselect>
+                            <div class="btn btn-purple w-100" v-on:click="doEstimate()">Estimate</div>
                         </div>
                     </div>
                 </div>
@@ -59,26 +61,42 @@
 export default {
     data() {
         return {
+            trainTo: null,
+            closestTime: null,
+            nextStation: null,
             station: {
                 from: '',
                 to: '',
                 options: [
-                    { value: '01svp', text: 'สุวรรณภูมิ' },
-                    { value: '02lkb', text: 'ลาดกระบัง' },
-                    { value: '03btc', text: 'บ้านทับช้าง' },
-                    { value: '04hmk', text: 'หัวหมาก' },
-                    { value: '05rkh', text: 'รามคำแหง' },
-                    { value: '06mks', text: 'มักกะสัน' },
-                    { value: '07rpr', text: 'ราชปรารภ' },
-                    { value: '08pyt', text: 'พญาไท' },
+                    { value: 1, text: 'Suvarnabhumi' },
+                    { value: 2, text: 'Ladkrabang' },
+                    { value: 3, text: 'Ban Thap Chang' },
+                    { value: 4, text: 'Hua Mak' },
+                    { value: 5, text: 'Ramkhamhaeng' },
+                    { value: 6, text: 'Makkasan' },
+                    { value: 7, text: 'Ratchaprarop' },
+                    { value: 8, text: 'Phaya Thai' }
                 ]
             },
             schedules: [
                 { time: '10:00', type: 'City Line' },
                 { time: '10:08', type: 'City Line' },
                 { time: '10:16', type: 'City Line' },
-                { time: '10:24', type: 'City Line' },
+                { time: '10:24', type: 'City Line' }
             ]
+        }
+    },
+    methods: {
+        doEstimate() {
+            let fromIndex = this.station.from.value
+            let toIndex = this.station.to.value
+            if (toIndex > fromIndex) {
+                this.trainTo = 8
+                this.nextStation = fromIndex + 1
+            } else if (toIndex < fromIndex) {
+                this.trainTo = 1
+                this.nextStation = fromIndex - 1
+            }
         }
     }
 }
@@ -94,5 +112,9 @@ export default {
 }
 #dashboard-title {
     color: #a0a0a0;
+}
+.btn-purple {
+    background-color: hsla(219, 79%, 66%, 0.5);
+    color: #333;
 }
 </style>
