@@ -3,9 +3,27 @@
         !! HTML Here !!
         เขียนใน <div></div> ที่เตรียมไว้ให้เท่านั้น
      -->
-    <div>
-        
+
+    <div id="box"> 
+        <div id="header">
+            <h1 id="head-titel">ARL - today </h1>
+            <div id="box-inside">
+
+
+
+            </div>
+
+        </div>
     </div>
+
+
+
+
+
+
+
+
+    
 </template>
 <script>
 export default {
@@ -13,6 +31,36 @@ export default {
 }
 </script>
 <style scoped>
+    #header{
+        width: 100%;
+        height: 50px;
+    }
+    #head-titel {
+        text-align: center;
+    }
+
+    #box {
+        width: 100% ;
+        height: 40vh ;
+        /* padding: 50px; */
+        background-color: coral;
+        position: fixed;
+
+    }
+
+    #box-inside {
+        width: 40% ;
+        height: 50vh;
+        background-color: rgb(255, 255, 255);
+        margin: auto;
+    }
+
+    
+
+
+
+
+
     /*
         !! CSS Here !!
         พยายามใช้ Bootstrap / Bootstrap Vue
