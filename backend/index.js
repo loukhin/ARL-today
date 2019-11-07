@@ -21,6 +21,9 @@ app.use(bodyParser.json())
 
 app.disable('x-powered-by')
 
+require('./routes/api-get')(app)
+require('./routes/api-post')(app)
+
 const server = http.createServer(app)
 
 server.listen(port, '0.0.0.0', () => {
