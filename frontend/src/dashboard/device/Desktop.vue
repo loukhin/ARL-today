@@ -35,9 +35,11 @@
                             <option>A1 สุวรรณภูมิ</option>
                         </select>
                     </div>
+                    <div class="pt-4">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">ประมาณเวลา</button>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -66,7 +68,7 @@ export default {
 
     #box-inside {
         width: 40% ;
-        height: 50vh;
+        height: 40vh;
         color: black;
         background-color: rgb(255, 255, 255);
         margin: auto;
