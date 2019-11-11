@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-const port = 3142
+const port = 80
 
 const app = express()
 
@@ -20,6 +20,9 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 app.disable('x-powered-by')
+
+require('./routes/api-get')(app)
+require('./routes/api-post')(app)
 
 const server = http.createServer(app)
 
