@@ -8,6 +8,8 @@ services:
             - "27017:27017"
         volumes:
             - ./mongodb/:/data/db/
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
         command: mongod --auth
         networks:
             - backbone
@@ -19,6 +21,8 @@ services:
             dockerfile: Dockerfile.backend
         volumes:
             - ./backend/public/:/usr/src/app/public/
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
             - ./backend/index.js:/usr/src/app/index.js
         depends_on:
             - db
