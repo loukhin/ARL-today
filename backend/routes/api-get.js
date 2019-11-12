@@ -8,6 +8,7 @@ module.exports = router => {
         query.findOne((err, data) => {
             if (err) return console.log(err)
             const time = ([0, 6].includes(new Date().getDay())) ? data.timeHoliday : data.timeNormal
+            const price = 15 + (Math.abs(originId - destination)-1)*5
 
             for (let key of time.keys()) {
                 hour = new Date().getHours()
@@ -28,7 +29,7 @@ module.exports = router => {
                 })
             })
 
-            res.json(data)
+            res.json({ price, time: data })
         })
     })
 }
