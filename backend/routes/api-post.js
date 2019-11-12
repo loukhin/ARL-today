@@ -1,5 +1,5 @@
 const timeTable = require('../models/timetable')
 
-module.exports = app => {
+module.exports = router => {
 
 }
