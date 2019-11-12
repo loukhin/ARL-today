@@ -8,7 +8,7 @@ const port = 80
 const app = express()
 
 mongoose.set('useFindAndModify', false)
-mongoose.connect('mongodb://db:27017/arl', { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+mongoose.connect('mongodb://arl:ARL3141@68.183.181.112:27017/arl', { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
     while (err) {
         console.log(`[Mongoose] Error: ${err}`)
         setTimeout(()=>{}, 5000)
@@ -19,10 +19,9 @@ mongoose.connect('mongodb://db:27017/arl', { useNewUrlParser: true, useUnifiedTo
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
-app.disable('x-powered-by')
+app.use('/api', require('./routes/api'))
 
-require('./routes/api-get')(app)
-require('./routes/api-post')(app)
+app.disable('x-powered-by')
 
 const server = http.createServer(app)
 
