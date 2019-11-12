@@ -8,7 +8,7 @@ const port = 80
 const app = express()
 
 mongoose.set('useFindAndModify', false)
-mongoose.connect('mongodb://arl:ARL3141@68.183.181.112:27017/arl', { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+mongoose.connect('mongodb://db/arl', { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
     while (err) {
         console.log(`[Mongoose] Error: ${err}`)
         setTimeout(()=>{}, 5000)
