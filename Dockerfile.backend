@@ -6,6 +6,6 @@ COPY ./backend/package*.json ./
 
 RUN npm install
 
-EXPOSE 3142
+EXPOSE 80
 
 CMD ["npm", "start"]
