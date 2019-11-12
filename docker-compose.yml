@@ -21,6 +21,8 @@ services:
             dockerfile: Dockerfile.backend
         volumes:
             - ./backend/public/:/usr/src/app/public/
+            - ./backend/models/:/usr/src/app/models/
+            - ./backend/routes/:/usr/src/app/routes/
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
             - ./backend/index.js:/usr/src/app/index.js
