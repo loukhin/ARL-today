@@ -6,7 +6,7 @@ module.exports = router => {
         const destinationId = (destination > originId) ? 8 : 1
         const query = timeTable.where({ originId, destinationId })
         query.findOne((err, data) => {
-            if (err) return console.log(err)
+            if (err) console.log(err)
             if (data !== null && typeof data !== 'undefined') {
                 const time = ([0, 6].includes(new Date().getDay())) ? data.timeHoliday : data.timeNormal
                 const price = 15 + (Math.abs(originId - destination) - 1) * 5
