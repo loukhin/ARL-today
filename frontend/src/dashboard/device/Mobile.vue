@@ -3,8 +3,8 @@
         <div id="app-header" class="container-fluid py-3">
             <div class="container text-center mt-4">
                 <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
-                <div class="my-4" v-if="trainTo !== null && nextStation !== null">
-                    <div class="display-4 font-weight-lighter">10:00</div>
+                <div class="my-4" v-if="trainTo != null && nextStation != null">
+                    <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
                     <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
                     <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
                 </div>
@@ -38,19 +38,21 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid pt-5">
-            <div class="container">
-                <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+        <div v-if="trainTo !== null && nextStation !== null">
+            <div class="container-fluid pt-5 mb-2">
+                <div class="container">
+                    <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+                </div>
             </div>
-        </div>
-        <div class="container-fluid bg-white py-2 mt-1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-4">
-                        <span class="h2 font-weight-lighter">10:08</span>
-                    </div>
-                    <div class="col-8 text-right my-auto">
-                        <span class="font-weight-bold text-middle">City Line</span>
+            <div class="container-fluid py-2" v-for="(schedule, index) in schedules" :key="schedule.index" :class="{ 'bg-white': stripeBackground(index) }">
+                <div class="container py-1">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="h2 font-weight-lighter">{{ schedule }}</span>
+                        </div>
+                        <div class="col-8 text-right my-auto">
+                            <span class="font-weight-bold text-middle">8 min</span> Remaining
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,11 +60,12 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
             trainTo: null,
-            closestTime: null,
             nextStation: null,
             station: {
                 from: '',
@@ -78,12 +81,7 @@ export default {
                     { value: 8, text: 'Phaya Thai' }
                 ]
             },
-            schedules: [
-                { time: '10:00', type: 'City Line' },
-                { time: '10:08', type: 'City Line' },
-                { time: '10:16', type: 'City Line' },
-                { time: '10:24', type: 'City Line' }
-            ]
+            schedules: []
         }
     },
     methods: {
@@ -97,6 +95,18 @@ export default {
                 this.trainTo = 1
                 this.nextStation = fromIndex - 1
             }
+            let reqAPI = 'https://arl.loukhin.com/api/get/' + fromIndex + '/' + toIndex
+            axios.get(reqAPI).then( res => {
+                console.log(res.data)
+                this.schedules = res.data.time
+            })
+        },
+        stripeBackground(tableIndex) {
+            if (tableIndex % 2 === 0) {
+                return true
+            } else {
+                return false
+            }
         }
     }
 }
@@ -104,11 +114,12 @@ export default {
 <style scoped>
 #app-header {
     color: #eee;
-    background-image: linear-gradient(slateblue, cornflowerblue)
+    background-image: linear-gradient(slateblue, cornflowerblue);
+    transition: max-height 0.5s ease-out
 }
 #app-box {
     color: #333;
-    
+
 }
 #dashboard-title {
     color: #a0a0a0;
