@@ -51,7 +51,7 @@
                             <span class="h2 font-weight-lighter">{{ schedule }}</span>
                         </div>
                         <div class="col-8 text-right my-auto">
-                            <span class="font-weight-bold text-middle">8 min</span> Remaining
+                            <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
                         </div>
                     </div>
                 </div>
@@ -100,6 +100,13 @@ export default {
                 console.log(res.data)
                 this.schedules = res.data.time
             })
+        },
+        timeRemaining(time) {
+            let hours = time.split(':')[0]
+            let minutes = time.split(':')[1]
+            let remaining = new Date(new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)).getMinutes()
+            remaining += (remaining > 1) ? ' mins' : ' min'
+            return remaining
         },
         stripeBackground(tableIndex) {
             if (tableIndex % 2 === 0) {
