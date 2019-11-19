@@ -133,6 +133,12 @@ export default {
 }
 .btn-purple {
     background-color: hsla(219, 79%, 66%, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 1px;
     color: #333;
+}
+.btn-purple:hover {
+    background-color: hsla(219, 56%, 56%, 0.575);
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+    cursor: pointer;
 }
 </style>
