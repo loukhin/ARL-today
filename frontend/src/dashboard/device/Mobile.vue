@@ -51,7 +51,11 @@
                             <span class="h2 font-weight-lighter">{{ schedule }}</span>
                         </div>
                         <div class="col-8 text-right my-auto">
+<<<<<<< HEAD
                             <span class="font-weight-bold text-middle">{{ timeMargin(schedule) }}</span> Remaining
+=======
+                            <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
+>>>>>>> ff66b9ac7986194c921079f16e91389ec28cce33
                         </div>
                     </div>
                 </div>
@@ -101,6 +105,13 @@ export default {
                 this.schedules = res.data.time
             })
         },
+        timeRemaining(time) {
+            let hours = time.split(':')[0]
+            let minutes = time.split(':')[1]
+            let remaining = new Date(new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)).getMinutes()
+            remaining += (remaining > 1) ? ' mins' : ' min'
+            return remaining
+        },
         stripeBackground(tableIndex) {
             if (tableIndex % 2 === 0) {
                 return true
@@ -133,6 +144,12 @@ export default {
 }
 .btn-purple {
     background-color: hsla(219, 79%, 66%, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 1px;
     color: #333;
+}
+.btn-purple:hover {
+    background-color: hsla(219, 56%, 56%, 0.575);
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+    cursor: pointer;
 }
 </style>
