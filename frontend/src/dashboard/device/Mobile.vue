@@ -51,7 +51,7 @@
                             <span class="h2 font-weight-lighter">{{ schedule }}</span>
                         </div>
                         <div class="col-8 text-right my-auto">
-                            <span class="font-weight-bold text-middle">8 min</span> Remaining
+                            <span class="font-weight-bold text-middle">{{ timeMargin(schedule) }}</span> Remaining
                         </div>
                     </div>
                 </div>
@@ -107,6 +107,13 @@ export default {
             } else {
                 return false
             }
+        },
+        timeMargin(schedule) {
+            let date = new Date()
+            let scheduleTime = date
+            scheduleTime.setHours(schedule.charAt(0) + schedule.charAt(1))
+            scheduleTime.setMinutes(schedule.charAt(3) + schedule.charAt(4))
+            return scheduleTime - date
         }
     }
 }

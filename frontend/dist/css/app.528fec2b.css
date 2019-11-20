@@ -1,0 +1,18 @@
+@import url(https://fonts.googleapis.com/css?family=Kanit:100,300,400&display=swap);#app-header[data-v-266f7035]{color:#eee;background-image:linear-gradient(#6a5acd,#6495ed);transition:max-height .5s ease-out}#app-box[data-v-266f7035]{color:#333}#dashboard-title[data-v-266f7035]{color:#a0a0a0}.btn-purple[data-v-266f7035]{background-color:rgba(100,148,237,.5);color:#333}#header[data-v-4e742f08]{width:100%;height:50px}#head-title[data-v-4e742f08]{text-align:center}#box-top[data-v-4e742f08]{width:100%;height:40vh;color:#fff;background-image:linear-gradient(#6a5acd,#6495ed);position:relative}#box-inside[data-v-4e742f08]{width:40%;max-height:40vh;color:#000;background-color:#fff;margin:auto}#box-bottom[data-v-4e742f08]{width:100%;height:60vh;background-image:linear-gradient(#e4dfdf,#c4c2c2);position:relative;z-index:-1}#text[data-v-4e742f08]{color:#a3a0a0;font-size:25px}
+
+/*
+        !! CSS Here !!
+        พยายามใช้ Bootstrap / Bootstrap Vue
+        ถ้าต้องการเพิ่ม style ระวังเรื่องชื่อ class ด้วย
+        แนะนำให้ใช้ id
+        ตัวอย่างเช่น ...
+
+        // # คือ id
+        #app-header {
+            background-color: #333;
+        }
+        // . คือ class
+        .app-header {
+            background-color: #333;
+        }
+     */body{font-family:Kanit,sans-serif;font-weight:300;color:#333;cursor:default;background-color:#f5f5f5}
