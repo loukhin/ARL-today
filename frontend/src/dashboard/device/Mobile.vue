@@ -51,11 +51,7 @@
                             <span class="h2 font-weight-lighter">{{ schedule }}</span>
                         </div>
                         <div class="col-8 text-right my-auto">
-<<<<<<< HEAD
-                            <span class="font-weight-bold text-middle">{{ timeMargin(schedule) }}</span> Remaining
-=======
                             <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
->>>>>>> ff66b9ac7986194c921079f16e91389ec28cce33
                         </div>
                     </div>
                 </div>
