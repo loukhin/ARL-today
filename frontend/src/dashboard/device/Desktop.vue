@@ -37,6 +37,31 @@
         </div>
       </div>
     </div>
+
+    <div v-if="trainTo !== null && nextStation !== null">
+      <div class="container-fluid pt-5 mb-2">
+        <div class="container">
+          <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+        </div>
+      </div>
+      <div
+        class="container-fluid py-2"
+        v-for="(schedule, index) in schedules"
+        :key="schedule.index"
+        :class="{ 'bg-white': stripeBackground(index) }"
+      >
+        <div class="container py-1">
+          <div class="row">
+            <div class="col-4">
+              <span class="h2 font-weight-lighter">{{ schedule }}</span>
+            </div>
+            <div class="col-8 text-right my-auto">
+              <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
