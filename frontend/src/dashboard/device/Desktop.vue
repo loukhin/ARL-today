@@ -14,7 +14,7 @@
               <multiselect
                 placeholder="Current"
                 v-model="station.from"
-                :options="originData"
+                :options="station.options"
                 label="text"
                 :searchable="false"
                 :show-labels="false"
@@ -24,7 +24,7 @@
                 class="my-2"
                 placeholder="Destination"
                 v-model="station.to"
-                :options="destinationData"
+                :options="station.options"
                 label="text"
                 :searchable="false"
                 :show-labels="false"
