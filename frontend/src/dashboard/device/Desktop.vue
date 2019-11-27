@@ -27,16 +27,21 @@
               ></multiselect>
             </div>
             <div class="pt-3">
-              <button type="button" class="btn btn-primary btn-lg btn-block">ประมาณเวลา</button>
+              <button
+                type="button"
+                v-on:click="doEstimate()"
+                class="btn btn-primary btn-lg btn-block"
+              >ประมาณเวลา</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div></div>
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -56,11 +61,45 @@ export default {
           { value: 8, text: "Phaya Thai" }
         ]
       },
-      schedules: [],
-      price: null
+      schedules: []
     };
+  },
+  methods: {
+    doEstimate() {
+      let fromIndex = this.station.from.value;
+      let toIndex = this.station.to.value;
+      if (toIndex > fromIndex) {
+        this.trainTo = 8;
+        this.nextStation = fromIndex + 1;
+      } else if (toIndex < fromIndex) {
+        this.trainTo = 1;
+        this.nextStation = fromIndex - 1;
+      }
+      let reqAPI =
+        "https://arl.loukhin.com/api/get/" + fromIndex + "/" + toIndex;
+      axios.get(reqAPI).then(res => {
+        console.log(res.data);
+        this.schedules = res.data.time;
+      });
+    },
+    timeRemaining(time) {
+      let hours = time.split(":")[0];
+      let minutes = time.split(":")[1];
+      let remaining = new Date(
+        new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)
+      ).getMinutes();
+      remaining += remaining > 1 ? " mins" : " min";
+      return remaining;
+    },
+    stripeBackground(tableIndex) {
+      if (tableIndex % 2 === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
-}
+};
 </script>
 <style scoped>
 #header {
