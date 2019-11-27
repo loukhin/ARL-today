@@ -1,41 +1,30 @@
 <template>
-  <!--
-        !! HTML Here !!
-        เขียนใน <div></div> ที่เตรียมไว้ให้เท่านั้น
-  -->
   <div>
     <div id="box-top">
       <div id="header">
         <h1 id="head-title">ARL TODAY</h1>
         <div id="box-inside" class="boder rounded">
           <div class="p-3">
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">สถานีต้นทาง</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>เลือกสถานี</option>
-                <option>A1 สุวรรณภูมิ</option>
-                <option>A2 ลาดกระบัง</option>
-                <option>A3 บ้านทับช้าง</option>
-                <option>A4 หัวหมาก</option>
-                <option>A5 รามคำแหง</option>
-                <option>A6 มักกะสัน</option>
-                <option>A7 ราชปรารภ</option>
-                <option>A8 พญาไท</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">สถานีปลายทาง</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>เลือกสถานี</option>
-                <option>A1 สุวรรณภูมิ</option>
-                <option>A2 ลาดกระบัง</option>
-                <option>A3 บ้านทับช้าง</option>
-                <option>A4 หัวหมาก</option>
-                <option>A5 รามคำแหง</option>
-                <option>A6 มักกะสัน</option>
-                <option>A7 ราชปรารภ</option>
-                <option>A8 พญาไท</option>
-              </select>
+            <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
+              <multiselect
+                placeholder="Current"
+                v-model="station.from"
+                :options="originData"
+                label="text"
+                :searchable="false"
+                :show-labels="false"
+                :allowEmpty="false"
+              ></multiselect>
+              <multiselect
+                class="my-2"
+                placeholder="Destination"
+                v-model="station.to"
+                :options="destinationData"
+                label="text"
+                :searchable="false"
+                :show-labels="false"
+                :allowEmpty="false"
+              ></multiselect>
             </div>
             <div class="pt-3">
               <button type="button" class="btn btn-primary btn-lg btn-block">ประมาณเวลา</button>
@@ -44,16 +33,35 @@
         </div>
       </div>
     </div>
-    <div>
-    </div>
+    <div></div>
   </div>
 </template>
-<<<<<<< HEAD
-=======
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      trainTo: null,
+      nextStation: null,
+      station: {
+        from: "",
+        to: "",
+        options: [
+          { value: 1, text: "Suvarnabhumi" },
+          { value: 2, text: "Ladkrabang" },
+          { value: 3, text: "Ban Thap Chang" },
+          { value: 4, text: "Hua Mak" },
+          { value: 5, text: "Ramkhamhaeng" },
+          { value: 6, text: "Makkasan" },
+          { value: 7, text: "Ratchaprarop" },
+          { value: 8, text: "Phaya Thai" }
+        ]
+      },
+      schedules: [],
+      price: null
+    };
+  }
+}
 </script>
->>>>>>> 9a9e02225fda1280976a723f637e4f0a42c2ee25
 <style scoped>
 #header {
   width: 100%;
@@ -88,11 +96,8 @@ export default {};
 }
 
 #text {
-    color: rgb(163, 160, 160);
-    font-size: 25px;
-    
-
-
+  color: rgb(163, 160, 160);
+  font-size: 25px;
 }
 
 /*
