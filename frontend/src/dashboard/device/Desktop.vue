@@ -3,6 +3,11 @@
     <div id="box-top">
       <div id="header">
         <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
+        <div class="my-4" v-if="trainTo != null && nextStation != null">
+          <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
+          <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
+          <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
+        </div>
         <div id="box-inside" class="boder rounded">
           <div class="p-3">
             <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
