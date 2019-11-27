@@ -2,7 +2,7 @@
   <div>
     <div id="box-top">
       <div id="header">
-        <h1 id="head-title">ARL TODAY</h1>
+        <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
         <div id="box-inside" class="boder rounded">
           <div class="p-3">
             <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
