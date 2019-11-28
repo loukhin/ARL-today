@@ -1,59 +1,136 @@
 <template>
-  <!--
-        !! HTML Here !!
-        เขียนใน <div></div> ที่เตรียมไว้ให้เท่านั้น
-  -->
   <div>
     <div id="box-top">
       <div id="header">
-        <h1 id="head-title">ARL TODAY</h1>
+        <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
+        <div class="my-4" v-if="trainTo != null && nextStation != null">
+          <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
+          <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
+          <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
+        </div>
         <div id="box-inside" class="boder rounded">
           <div class="p-3">
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">สถานีต้นทาง</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>เลือกสถานี</option>
-                <option>A1 สุวรรณภูมิ</option>
-                <option>A2 ลาดกระบัง</option>
-                <option>A3 บ้านทับช้าง</option>
-                <option>A4 หัวหมาก</option>
-                <option>A5 รามคำแหง</option>
-                <option>A6 มักกะสัน</option>
-                <option>A7 ราชปรารภ</option>
-                <option>A8 พญาไท</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">สถานีปลายทาง</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>เลือกสถานี</option>
-                <option>A1 สุวรรณภูมิ</option>
-                <option>A2 ลาดกระบัง</option>
-                <option>A3 บ้านทับช้าง</option>
-                <option>A4 หัวหมาก</option>
-                <option>A5 รามคำแหง</option>
-                <option>A6 มักกะสัน</option>
-                <option>A7 ราชปรารภ</option>
-                <option>A8 พญาไท</option>
-              </select>
+            <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
+              <multiselect
+                placeholder="Current"
+                v-model="station.from"
+                :options="station.options"
+                label="text"
+                :searchable="false"
+                :show-labels="false"
+                :allowEmpty="false"
+              ></multiselect>
+              <multiselect
+                class="my-2"
+                placeholder="Destination"
+                v-model="station.to"
+                :options="station.options"
+                label="text"
+                :searchable="false"
+                :show-labels="false"
+                :allowEmpty="false"
+              ></multiselect>
             </div>
             <div class="pt-3">
-              <button type="button" class="btn btn-primary btn-lg btn-block">ประมาณเวลา</button>
+              <button
+                type="button"
+                v-on:click="doEstimate()"
+                class="btn btn-primary btn-lg btn-block"
+              >ประมาณเวลา</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div>
+
+    <div v-if="trainTo !== null && nextStation !== null">
+      <div class="container-fluid pt-5 mb-2">
+        <div class="container">
+          <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+        </div>
+      </div>
+      <div
+        class="container-fluid py-2"
+        v-for="(schedule, index) in schedules"
+        :key="schedule.index"
+        :class="{ 'bg-white': stripeBackground(index) }"
+      >
+        <div class="container py-1">
+          <div class="row">
+            <div class="col-4">
+              <span class="h2 font-weight-lighter">{{ schedule }}</span>
+            </div>
+            <div class="col-8 text-right my-auto">
+              <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-<<<<<<< HEAD
-=======
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      trainTo: null,
+      nextStation: null,
+      station: {
+        from: "",
+        to: "",
+        options: [
+          { value: 1, text: "Suvarnabhumi" },
+          { value: 2, text: "Ladkrabang" },
+          { value: 3, text: "Ban Thap Chang" },
+          { value: 4, text: "Hua Mak" },
+          { value: 5, text: "Ramkhamhaeng" },
+          { value: 6, text: "Makkasan" },
+          { value: 7, text: "Ratchaprarop" },
+          { value: 8, text: "Phaya Thai" }
+        ]
+      },
+      schedules: []
+    };
+  },
+  methods: {
+    doEstimate() {
+      let fromIndex = this.station.from.value;
+      let toIndex = this.station.to.value;
+      if (toIndex > fromIndex) {
+        this.trainTo = 8;
+        this.nextStation = fromIndex + 1;
+      } else if (toIndex < fromIndex) {
+        this.trainTo = 1;
+        this.nextStation = fromIndex - 1;
+      }
+      let reqAPI =
+        "https://arl.loukhin.com/api/get/" + fromIndex + "/" + toIndex;
+      axios.get(reqAPI).then(res => {
+        console.log(res.data);
+        this.schedules = res.data.time;
+      });
+    },
+    timeRemaining(time) {
+      let hours = time.split(":")[0];
+      let minutes = time.split(":")[1];
+      let remaining = new Date(
+        new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)
+      ).getMinutes();
+      remaining += remaining > 1 ? " mins" : " min";
+      return remaining;
+    },
+    stripeBackground(tableIndex) {
+      if (tableIndex % 2 === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+};
 </script>
->>>>>>> 9a9e02225fda1280976a723f637e4f0a42c2ee25
 <style scoped>
 #header {
   width: 100%;
@@ -88,11 +165,8 @@ export default {};
 }
 
 #text {
-    color: rgb(163, 160, 160);
-    font-size: 25px;
-    
-
-
+  color: rgb(163, 160, 160);
+  font-size: 25px;
 }
 
 /*
