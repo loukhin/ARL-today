@@ -14,7 +14,7 @@
               <multiselect
                 placeholder="Current"
                 v-model="station.from"
-                :options="station.options"
+                :options="originData"
                 label="text"
                 :searchable="false"
                 :show-labels="false"
@@ -24,7 +24,7 @@
                 class="my-2"
                 placeholder="Destination"
                 v-model="station.to"
-                :options="station.options"
+                :options="destinationData"
                 label="text"
                 :searchable="false"
                 :show-labels="false"
@@ -93,6 +93,18 @@ export default {
       },
       schedules: []
     };
+  },
+  computed: {
+    originData() {
+      return this.station.options.filter(val => {
+        if (val.value !== this.station.to.value) return val;
+      });
+    },
+    destinationData() {
+      return this.station.options.filter(val => {
+        if (val.value !== this.station.from.value) return val;
+      });
+    }
   },
   methods: {
     doEstimate() {
