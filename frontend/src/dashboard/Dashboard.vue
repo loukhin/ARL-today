@@ -1,21 +1,23 @@
 <template>
-    <div>
-        <div class="d-block d-md-none">
-            <Mobile></Mobile>
-        </div>
-        <div class="d-none d-md-block">
-            <Desktop></Desktop>
-        </div>
-    </div>
+  <div>
+    <Mobile v-if="isMobileOnly"></Mobile>
+    <Desktop v-else></Desktop>
+  </div>
 </template>
 <script>
-import Mobile from './device/Mobile.vue'
-import Desktop from './device/Desktop.vue'
+import Mobile from "./device/Mobile.vue";
+import Desktop from "./device/Desktop.vue";
+import { isMobileOnly } from "mobile-device-detect";
 
 export default {
-    components: {
-        Mobile,
-        Desktop
-    }
-}
+  data() {
+    return {
+      isMobileOnly
+    };
+  },
+  components: {
+    Mobile,
+    Desktop
+  }
+};
 </script>
