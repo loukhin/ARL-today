@@ -1,67 +1,67 @@
 <template>
-  <div>
-    <div id="box-top">
-      <div id="header">
-        <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
-        <div class="my-4" v-if="trainTo != null && nextStation != null">
-          <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
-          <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
-          <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
-        </div>
-        <div id="box-inside" class="boder rounded">
-          <div class="p-3">
-            <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
-              <multiselect
-                placeholder="Current"
-                v-model="station.from"
-                :options="originData"
-                label="text"
-                :searchable="false"
-                :show-labels="false"
-                :allowEmpty="false"
-              ></multiselect>
-              <multiselect
-                class="my-2"
-                placeholder="Destination"
-                v-model="station.to"
-                :options="destinationData"
-                label="text"
-                :searchable="false"
-                :show-labels="false"
-                :allowEmpty="false"
-              ></multiselect>
-            </div>
-            <div class="pt-3">
-              <button
-                type="button"
-                v-on:click="doEstimate()"
-                class="btn btn-primary btn-lg btn-block"
-              >ประมาณเวลา</button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div id="app-container" class="d-flex flex-column justify-content-start">
+    <div class="mb-4 align-self-center">
+      <span class="font-weight-lighter display-4 text-white">ARL Today</span>
     </div>
-
-    <div v-if="trainTo !== null && nextStation !== null">
-      <div class="container-fluid pt-5 mb-2">
-        <div class="container">
-          <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+    <div class="container row mx-auto justify-content-center">
+      <div class="col-md-5 row p-0 m-auto m-md-0 mr-md-2">
+        <div
+          class="col-12 d-flex flex-column justify-content-center align-self-center text-white"
+          v-if="trainTo != null && nextStation != null"
+        >
+          <div class="display-3 font-weight-lighter align-self-center">{{ schedules[0] }}</div>
+          <div
+            class="font-weight-light align-self-center"
+          >Train to {{ station.options[trainTo - 1].text }}</div>
+          <div
+            class="font-weight-light align-self-center"
+          >Next station : {{ station.options[nextStation - 1].text }}</div>
+        </div>
+        <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
+          <multiselect
+            placeholder="Current"
+            v-model="station.from"
+            :options="originData"
+            label="text"
+            :searchable="false"
+            :show-labels="false"
+            :allowEmpty="false"
+          ></multiselect>
+          <multiselect
+            class="my-2"
+            placeholder="Destination"
+            v-model="station.to"
+            :options="destinationData"
+            label="text"
+            :searchable="false"
+            :show-labels="false"
+            :allowEmpty="false"
+          ></multiselect>
+          <div class="btn btn-purple w-100" v-on:click="doEstimate()">Estimate</div>
         </div>
       </div>
       <div
-        class="container-fluid py-2"
-        v-for="(schedule, index) in schedules"
-        :key="schedule.index"
-        :class="{ 'bg-white': stripeBackground(index) }"
+        class="col-md-6 card shadow p-0 ml-md-2 mt-3 mt-md-0"
+        :class="{ 'align-self-start': trainTo === null && nextStation === null }"
       >
-        <div class="container py-1">
-          <div class="row">
-            <div class="col-4">
-              <span class="h2 font-weight-lighter">{{ schedule }}</span>
-            </div>
-            <div class="col-8 text-right my-auto">
-              <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
+        <div class="my-2 mx-3">
+          <div id="dashboard-title" class="text-uppercase font-weight-bold">Incoming Train</div>
+        </div>
+        <div
+          class="container-fluid py-2"
+          v-for="(schedule, index) in schedules"
+          :key="schedule.index"
+          :class="{ 'bg-light': stripeBackground(index) }"
+        >
+          <div class="container py-1">
+            <div class="row">
+              <div class="col-4">
+                <span class="h2 font-weight-lighter">{{ schedule }}</span>
+              </div>
+              <div class="col-8 text-right my-auto">
+                <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span>
+                <span>{{ (schedule !== "--:--") ? " Remaining" : "No train in 1 hour ahead" }}</span>
+              </div>
             </div>
           </div>
         </div>
