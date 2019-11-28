@@ -16,6 +16,10 @@
           <div
             class="font-weight-light align-self-center"
           >Next station : {{ station.options[nextStation - 1].text }}</div>
+          <div
+            id="text-price"
+            class="font-weight-lighter align-self-center mb-2"
+          >Price: {{ price }} THB</div>
         </div>
         <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
           <multiselect
@@ -91,7 +95,8 @@ export default {
           { value: 8, text: "Phaya Thai" }
         ]
       },
-      schedules: []
+      schedules: [],
+      price: null
     };
   },
   computed: {
@@ -120,8 +125,8 @@ export default {
       let reqAPI =
         "https://arl.loukhin.com/api/get/" + fromIndex + "/" + toIndex;
       axios.get(reqAPI).then(res => {
-        console.log(res.data);
-        this.schedules = res.data.time;
+        this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"];
+        this.price = res.data.price;
       });
     },
     timeRemaining(time) {
