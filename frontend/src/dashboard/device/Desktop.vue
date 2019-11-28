@@ -144,57 +144,35 @@ export default {
 };
 </script>
 <style scoped>
-#header {
+#app-container {
   width: 100%;
-  height: 50px;
+  min-height: 100vh;
+  background: linear-gradient(slateblue, cornflowerblue);
+  padding-top: 8vw;
+  padding-bottom: 50px;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 }
-#head-title {
-  text-align: center;
-}
-
-#box-top {
-  width: 100%;
-  height: 40vh;
-  color: white;
-  background-image: linear-gradient(slateblue, cornflowerblue);
-  position: relative;
-}
-
-#box-inside {
-  width: 40%;
-  max-height: 40vh;
-  color: black;
-  background-color: rgb(255, 255, 255);
-  margin: auto;
+#text-price {
+  font-size: 36px;
 }
 
-#box-bottom {
-  width: 100%;
-  height: 60vh;
-  background-image: linear-gradient(rgb(228, 223, 223), rgb(196, 194, 194));
-  position: relative;
-  z-index: -1;
+.btn-purple {
+  background-color: hsla(231, 79%, 66%, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 1px;
+  color: #333;
 }
-
-#text {
-  color: rgb(163, 160, 160);
-  font-size: 25px;
+.btn-purple:hover {
+  background-color: hsla(229, 56%, 56%, 0.575);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+  cursor: pointer;
 }
-
-/*
-        !! CSS Here !!
-        พยายามใช้ Bootstrap / Bootstrap Vue
-        ถ้าต้องการเพิ่ม style ระวังเรื่องชื่อ class ด้วย
-        แนะนำให้ใช้ id
-        ตัวอย่างเช่น ...
-
-        // # คือ id
-        #app-header {
-            background-color: #333;
-        }
-        // . คือ class
-        .app-header {
-            background-color: #333;
-        }
-     */
+.btn-purple.disabled,
+.btn-purple.disabled:hover {
+  background-color: hsla(231, 79%, 66%, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+  cursor: default;
+}
 </style>
