@@ -117,7 +117,7 @@ export default {
         this.nextStation = fromIndex - 1;
       }
       let reqAPI =
-        "https://arl.loukhin.com/api/get/" + fromIndex + "/" + toIndex;
+        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex;
       axios.get(reqAPI).then(res => {
         console.log(res.data);
         this.schedules = res.data.time;
