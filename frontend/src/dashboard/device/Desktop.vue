@@ -41,7 +41,6 @@
             :show-labels="false"
             :allowEmpty="false"
           ></multiselect>
-          <div class="btn btn-purple w-100" v-on:click="doEstimate()">Estimate</div>
         </div>
       </div>
       <div
@@ -145,6 +144,21 @@ export default {
         return false;
       }
     }
+  },
+  watch: {
+    station: {
+      handler() {
+        let fromIndex = this.station.from.value;
+        let toIndex = this.station.to.value;
+        if (
+          fromIndex !== toIndex &&
+          typeof fromIndex !== "undefined" &&
+          typeof toIndex !== "undefined"
+        )
+          this.doEstimate();
+      },
+      deep: true
+    }
   }
 };
 </script>
@@ -162,22 +176,5 @@ export default {
 }
 #text-price {
   font-size: 36px;
-}
-
-.btn-purple {
-  background-color: hsla(231, 79%, 66%, 0.5);
-  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 1px;
-  color: #333;
-}
-.btn-purple:hover {
-  background-color: hsla(229, 56%, 56%, 0.575);
-  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
-  cursor: pointer;
-}
-.btn-purple.disabled,
-.btn-purple.disabled:hover {
-  background-color: hsla(231, 79%, 66%, 0.5);
-  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
-  cursor: default;
 }
 </style>
