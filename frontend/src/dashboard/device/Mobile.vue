@@ -2,11 +2,15 @@
   <div>
     <div id="app-header" class="container-fluid py-3">
       <div class="container text-center mt-4">
-        <h5 class="font-weight-bold text-uppercase">ARL Today</h5>
+        <span class="font-weight-lighter display-4 text-white">ARL Today</span>
         <div class="my-4" v-if="trainTo != null && nextStation != null">
           <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
           <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
           <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
+          <div
+            id="text-price"
+            class="font-weight-lighter align-self-center mb-2"
+          >Price: {{ price }} THB</div>
         </div>
         <div class="row">
           <div class="col-12 mt-2 mb-n5">
@@ -84,7 +88,8 @@ export default {
           { value: 8, text: "Phaya Thai" }
         ]
       },
-      schedules: []
+      schedules: [],
+      price: null
     };
   },
   methods: {
