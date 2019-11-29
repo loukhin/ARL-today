@@ -7,6 +7,7 @@ Vue.use(Router)
 
 export const router = new Router ({
     mode: 'history',
+    base: 'arl-today',
     routes: [
         {
             path: '/',
