@@ -130,12 +130,18 @@ export default {
       });
     },
     timeRemaining(time) {
+      if (time === "--:--") return;
       let hours = time.split(":")[0];
       let minutes = time.split(":")[1];
       let remaining = new Date(
         new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)
-      ).getMinutes();
-      remaining += remaining > 1 ? " mins" : " min";
+      );
+      if (remaining.getUTCHours() === 1) {
+        remaining = "1 hour";
+      } else {
+        remaining = remaining.getMinutes();
+        remaining += remaining > 1 ? " mins" : " min";
+      }
       return remaining;
     },
     stripeBackground(tableIndex) {
