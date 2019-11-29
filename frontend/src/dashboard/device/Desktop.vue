@@ -114,6 +114,7 @@ export default {
     doEstimate() {
       let fromIndex = this.station.from.value;
       let toIndex = this.station.to.value;
+      if (fromIndex === toIndex) return;
       if (toIndex > fromIndex) {
         this.trainTo = 8;
         this.nextStation = fromIndex + 1;
