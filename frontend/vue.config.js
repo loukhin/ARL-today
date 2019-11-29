@@ -1,3 +1,4 @@
 module.exports = {
-    publicPath: '/arl-today'
+    publicPath: '/arl-today',
+    productionSourceMap: false
 }
