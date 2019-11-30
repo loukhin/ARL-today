@@ -67,7 +67,8 @@
               <span class="h2 font-weight-lighter">{{ schedule }}</span>
             </div>
             <div class="col-8 text-right my-auto">
-              <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span> Remaining
+                <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span>
+                <span>{{ (schedule !== "--:--") ? " Remaining" : "No train in 1 hour ahead" }}</span>
             </div>
           </div>
         </div>
@@ -134,10 +135,12 @@ export default {
       let reqAPI =
         "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex;
       axios.get(reqAPI).then(res => {
-        this.schedules = res.data.time;
+        this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"];
+        this.price = res.data.price;
       });
     },
     timeRemaining(time) {
+      if (time === "--:--") return;
       let hours = time.split(":")[0];
       let minutes = time.split(":")[1];
       let remaining = new Date(
