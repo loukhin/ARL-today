@@ -34,6 +34,15 @@
                 :show-labels="false"
                 :allowEmpty="false"
               ></multiselect>
+              <multiselect
+                class="my-2"
+                placeholder="Time"
+                v-model="selectedTime"
+                :options="time"
+                :searchable="false"
+                :show-labels="false"
+                :allowEmpty="false"
+              ></multiselect>
               <div class="btn btn-purple w-100" v-on:click="doEstimate()">Estimate</div>
             </div>
           </div>
@@ -49,7 +58,7 @@
       <div
         class="container-fluid py-2"
         v-for="(schedule, index) in schedules"
-        :key="schedule.index"
+        :key="index"
         :class="{ 'bg-white': stripeBackground(index) }"
       >
         <div class="container py-1">
@@ -88,6 +97,12 @@ export default {
           { value: 8, text: "Phaya Thai" }
         ]
       },
+      selectedTime: "Current Time",
+      time: [
+        'Current Time', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00',
+        '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00',
+        '21:00', '22:00', '23:00', '00:00'
+      ],
       schedules: [],
       price: null
     };
@@ -102,7 +117,7 @@ export default {
       return this.station.options.filter(val => {
         if (val.value !== this.station.from.value) return val;
       });
-    }
+    },
   },
   methods: {
     doEstimate() {
@@ -119,7 +134,6 @@ export default {
       let reqAPI =
         "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex;
       axios.get(reqAPI).then(res => {
-        console.log(res.data);
         this.schedules = res.data.time;
       });
     },
