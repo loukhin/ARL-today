@@ -3,43 +3,52 @@ const timeTable = require('../models/timetable')
 
 const router = express.Router()
 
-router.get('/get/:originId/:destination', (req, res) => {
-    const { originId, destination } = req.params
+router.get('/get/:originId/:destination/:time?', (req, res) => {
+    const { originId, destination, time } = req.params
     const destinationId = (destination > originId) ? 8 : 1
     const query = timeTable.where({ originId, destinationId })
     query.findOne((err, data) => {
         if (err) console.log(err)
         if (data !== null && typeof data !== 'undefined') {
-            const time = ([0, 6].includes(new Date().getDay())) ? data.timeHoliday : data.timeNormal
+            const timeData = ([0, 6].includes(new Date().getDay())) ? data.timeHoliday : data.timeNormal
             const price = 15 + (Math.abs(originId - destination) - 1) * 5
 
-            for (let key of time.keys()) {
+            filteredTime = []
+            let hour, currentHour, currentMin
+
+            if (typeof time !== 'undefined') {
+                hour = parseInt(time)
+                currentHour = parseInt(time)
+                currentMin = 0
+            } else {
                 hour = new Date().getHours()
+                currentHour = new Date().getHours()
+                currentMin = new Date().getMinutes()
+            }
+            for (let key of timeData.keys()) {
                 if (!(hour <= parseInt(key) && parseInt(key) <= hour + 1)) {
-                    time.delete(key)
+                    timeData.delete(key)
                 }
             }
 
-            data = []
-            time.forEach((mins, hour) => {
+            timeData.forEach((mins, hour) => {
                 mins.forEach(min => {
-                    const currentMin = new Date().getMinutes()
-                    const currentHour = new Date().getHours()
                     if ((currentMin <= min && hour == currentHour)
                         || (currentMin >= min && hour != currentHour)) {
-                        data.push(`${hour}:${min}`)
+                        filteredTime.push(`${hour}:${min}`)
                     }
                 })
             })
-            data.sort((a, b) => {
+
+            filteredTime.sort((a, b) => {
                 a = parseInt(a)
                 b = parseInt(b)
                 return a - b
             })
 
-            res.json({ status: 200, price, time: data })
+            res.status(200).json({ status: 200, price, time: filteredTime })
         } else {
-            res.json({ status: 404 })
+            res.status(404).json({ status: 404 })
         }
     })
 })
