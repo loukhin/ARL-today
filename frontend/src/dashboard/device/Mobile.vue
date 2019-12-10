@@ -144,24 +144,18 @@ export default {
         this.trainTo = 1
         this.nextStation = fromIndex - 1
       }
-      let specificTime = this.selectedTime
-      let reqAPI =
-        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex
+      let dayType = (this.time.isHoliday) ? 'holiday' : 'weekday'
+      let specificTime = this.time.selected
+      let reqAPI
       if (specificTime === "Current Time") {
-        let reqAPI =
-        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex
-        axios.get(reqAPI).then(res => {
-          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"]
-          this.price = res.data.price
-        })
+        reqAPI = `https://app.loukhin.com/arl-today/api/get/${fromIndex}/${toIndex}/now`
       } else {
-        let reqAPI =
-        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex + "/" + specificTime
-        axios.get(reqAPI).then(res => {
-          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"]
-          this.price = res.data.price
-        })
+        reqAPI = `https://app.loukhin.com/arl-today/api/get/${fromIndex}/${toIndex}/${specificTime}/${dayType}`
       }
+      axios.get(reqAPI).then(res => {
+        this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"]
+        this.price = res.data.price
+      })
     },
     timeRemaining(time) {
       if (time === "--:--") return
