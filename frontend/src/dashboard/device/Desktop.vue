@@ -11,10 +11,10 @@
         >
           <div class="display-3 font-weight-lighter align-self-center">{{ schedules[0] }}</div>
           <div
-            class="font-weight-light align-self-center"
+            class="align-self-center"
           >Train to {{ station.options[trainTo - 1].text }}</div>
           <div
-            class="font-weight-light align-self-center"
+            class="align-self-center"
           >Next station : {{ station.options[nextStation - 1].text }}</div>
           <div
             id="text-price"
