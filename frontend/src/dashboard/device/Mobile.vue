@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default {
   data() {
@@ -115,49 +115,49 @@ export default {
       ],
       schedules: [],
       price: null
-    };
+    }
   },
   computed: {
     originData() {
       return this.station.options.filter(val => {
-        if (val.value !== this.station.to.value) return val;
-      });
+        if (val.value !== this.station.to.value) return val
+      })
     },
     destinationData() {
       return this.station.options.filter(val => {
-        if (val.value !== this.station.from.value) return val;
-      });
+        if (val.value !== this.station.from.value) return val
+      })
     },
   },
   methods: {
     doEstimate() {
-      let fromIndex = this.station.from.value;
-      let toIndex = this.station.to.value;
-      if (fromIndex === toIndex) return;
+      let fromIndex = this.station.from.value
+      let toIndex = this.station.to.value
+      if (fromIndex === toIndex) return
       if (toIndex > fromIndex) {
-        this.trainTo = 8;
-        this.nextStation = fromIndex + 1;
+        this.trainTo = 8
+        this.nextStation = fromIndex + 1
       } else if (toIndex < fromIndex) {
-        this.trainTo = 1;
-        this.nextStation = fromIndex - 1;
+        this.trainTo = 1
+        this.nextStation = fromIndex - 1
       }
-      let specificTime = this.selectedTime;
+      let specificTime = this.selectedTime
       let reqAPI =
         "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex
       if (specificTime === "Current Time") {
         let reqAPI =
         "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex
         axios.get(reqAPI).then(res => {
-          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"];
-          this.price = res.data.price;
-        });
+          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"]
+          this.price = res.data.price
+        })
       } else {
         let reqAPI =
-        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex + "/" + specificTime;
+        "https://app.loukhin.com/arl-today/api/get/" + fromIndex + "/" + toIndex + "/" + specificTime
         axios.get(reqAPI).then(res => {
-          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"];
-          this.price = res.data.price;
-        });
+          this.schedules = res.data.time.length !== 0 ? res.data.time : ["--:--"]
+          this.price = res.data.price
+        })
       }
     },
     timeRemaining(time) {
@@ -179,13 +179,13 @@ export default {
     },
     stripeBackground(tableIndex) {
       if (tableIndex % 2 === 0) {
-        return true;
+        return true
       } else {
-        return false;
+        return false
       }
     }
   }
-};
+}
 </script>
 <style scoped>
 #app-header {
