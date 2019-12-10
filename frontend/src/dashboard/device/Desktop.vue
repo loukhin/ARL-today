@@ -170,13 +170,15 @@ export default {
       let remaining = new Date(
         new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)
       )
-      if (remaining.getUTCHours() === 1) {
-        remaining = "1 hour"
+      let remainText
+      if (remaining.getUTCHours() >= 1) {
+        remaining = remaining.getUTCHours()
+        remainText = `${remaining} ${remaining > 1 ? "hours" : "hour"}`
       } else {
         remaining = remaining.getMinutes()
-        remaining += remaining > 1 ? " mins" : " min"
+        remainText = `${remaining} ${remaining > 1 ? "mins" : "min"}`
       }
-      return remaining
+      return remainText
     },
     stripeBackground(tableIndex) {
       if (tableIndex % 2 === 0) {
