@@ -2,11 +2,11 @@
   <div>
     <div id="app-header" class="container-fluid py-3">
       <div class="container text-center mt-4">
-        <span class="font-weight-lighter display-4 text-white">ARL Today</span>
-        <div class="my-4" v-if="trainTo != null && nextStation != null">
+        <h4 class="text-white">ARL Today</h4>
+        <div class="my-2" v-if="trainTo != null && nextStation != null">
           <div class="display-4 font-weight-lighter">{{ schedules[0] }}</div>
-          <div class="font-weight-light">Train to {{ station.options[trainTo - 1].text }}</div>
-          <div class="font-weight-light">Next station : {{ station.options[nextStation - 1].text }}</div>
+          <div>Train to {{ station.options[trainTo - 1].text }}</div>
+          <div>Next station : {{ station.options[nextStation - 1].text }}</div>
           <div
             id="text-price"
             class="font-weight-lighter align-self-center mb-2"
@@ -16,6 +16,7 @@
           <div class="col-12 mt-2 mb-n5">
             <div id="app-box" class="bg-light rounded shadow px-4 py-3">
               <multiselect
+                class="my-2"
                 placeholder="Current"
                 v-model="station.from"
                 :options="originData"
@@ -37,13 +38,21 @@
               <multiselect
                 class="my-2"
                 placeholder="Time"
-                v-model="selectedTime"
-                :options="time"
+                v-model="time.selected"
+                :options="time.options"
                 :searchable="false"
                 :show-labels="false"
                 :allowEmpty="false"
               ></multiselect>
-              <div class="btn btn-purple w-100" v-on:click="doEstimate()">Estimate</div>
+              <div class="form-check" v-if="this.time.selected !== 'Current Time'">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="isHoliday"
+                  v-model="time.isHoliday"
+                />
+                <label class="form-check-label" for="isHoliday">Holiday</label>
+              </div>
             </div>
           </div>
         </div>
@@ -67,8 +76,8 @@
               <span class="h2 font-weight-lighter">{{ schedule }}</span>
             </div>
             <div class="col-8 text-right my-auto">
-                <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span>
-                <span>{{ (schedule !== "--:--") ? " Remaining" : "No train in 1 hour ahead" }}</span>
+              <span class="font-weight-bold text-middle">{{ timeRemaining(schedule) }}</span>
+              <span>{{ (schedule !== "--:--") ? " Remaining" : "No train in 1 hour ahead" }}</span>
             </div>
           </div>
         </div>
