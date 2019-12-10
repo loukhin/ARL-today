@@ -161,14 +161,21 @@ export default {
       }
     },
     timeRemaining(time) {
-      if (time === "--:--") return;
-      let hours = time.split(":")[0];
-      let minutes = time.split(":")[1];
+      if (time === "--:--") return
+      let hours = time.split(":")[0]
+      let minutes = time.split(":")[1]
       let remaining = new Date(
         new Date().setHours(hours, minutes, 0) - new Date().setSeconds(0)
-      ).getMinutes();
-      remaining += remaining > 1 ? " mins" : " min";
-      return remaining;
+      )
+      let remainText
+      if (remaining.getUTCHours() >= 1) {
+        remaining = remaining.getUTCHours()
+        remainText = `${remaining} ${remaining > 1 ? "hours" : "hour"}`
+      } else {
+        remaining = remaining.getMinutes()
+        remainText = `${remaining} ${remaining > 1 ? "mins" : "min"}`
+      }
+      return remainText
     },
     stripeBackground(tableIndex) {
       if (tableIndex % 2 === 0) {
