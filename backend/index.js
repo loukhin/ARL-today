@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-const { sleep } = require('./helpers')
+const { sleep } = require('./routes/helpers')
 
 const port = 80
 
