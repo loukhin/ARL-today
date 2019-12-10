@@ -51,6 +51,15 @@
             :show-labels="false"
             :allowEmpty="false"
           ></multiselect>
+          <div class="form-check mx-auto" v-if="this.time.selected !== 'Current Time'">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="isHoliday"
+              v-model="time.isHoliday"
+            />
+            <label class="form-check-label" for="isHoliday">Holiday</label>
+          </div>
         </div>
       </div>
       <div
