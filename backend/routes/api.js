@@ -1,22 +1,32 @@
 const express = require('express')
 const timeTable = require('../models/timetable')
+const { calculatePrice, isHoliday } = require('./helpers')
 
 const router = express.Router()
 
-router.get('/get/:originId/:destination/:time?', (req, res) => {
-    const { originId, destination, time } = req.params
+router.get('/get/:originId/:destination/:time/:dayType?', (req, res) => {
+    const { originId, destination, time, dayType } = req.params
     const destinationId = (destination > originId) ? 8 : 1
     const query = timeTable.where({ originId, destinationId })
     query.findOne((err, data) => {
         if (err) console.log(err)
-        if (data !== null && typeof data !== 'undefined') {
-            const timeData = ([0, 6].includes(new Date().getDay())) ? data.timeHoliday : data.timeNormal
-            const price = 15 + (Math.abs(originId - destination) - 1) * 5
+        if (
+            data !== null && typeof data !== 'undefined'
+            && (time === 'now' || typeof dayType !== 'undefined')
+        ) {
+            let timeData
+            if (time === 'now') {
+                timeData = (isHoliday(time)) ? data.timeHoliday : data.timeNormal
+            } else {
+                timeData = (dayType === 'holiday') ? data.timeHoliday : data.timeNormal
+            }
+
+            const price = calculatePrice(originId, destination)
 
             filteredTime = []
             let hour, currentHour, currentMin
 
-            if (typeof time !== 'undefined') {
+            if (time !== 'now') {
                 hour = parseInt(time)
                 currentHour = parseInt(time)
                 currentMin = 0
@@ -25,6 +35,7 @@ router.get('/get/:originId/:destination/:time?', (req, res) => {
                 currentHour = new Date().getHours()
                 currentMin = new Date().getMinutes()
             }
+
             for (let key of timeData.keys()) {
                 if (!(hour <= parseInt(key) && parseInt(key) <= hour + 1)) {
                     timeData.delete(key)
@@ -33,8 +44,10 @@ router.get('/get/:originId/:destination/:time?', (req, res) => {
 
             timeData.forEach((mins, hour) => {
                 mins.forEach(min => {
-                    if ((currentMin <= min && hour == currentHour)
-                        || (currentMin >= min && hour != currentHour)) {
+                    if (
+                        (currentMin <= min && hour == currentHour)
+                        || (currentMin >= min && hour != currentHour)
+                    ) {
                         filteredTime.push(`${hour}:${min}`)
                     }
                 })
