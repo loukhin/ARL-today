@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+const { sleep } = require('./helpers')
+
 const port = 80
 
 const app = express()
@@ -11,7 +13,7 @@ mongoose.set('useFindAndModify', false)
 mongoose.connect('mongodb://db/arl', { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
     while (err) {
         console.log(`[Mongoose] Error: ${err}`)
-        setTimeout(()=>{}, 5000)
+        sleep(5000)
     }
     console.log(`[Mongoose] Connected to MongoDB`)
 })
