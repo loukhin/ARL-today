@@ -23,6 +23,7 @@
         </div>
         <div id="app-box" class="col-12 p-3 card shadow d-flex align-self-end">
           <multiselect
+            class="my-1"
             placeholder="Current"
             v-model="station.from"
             :options="originData"
@@ -32,11 +33,20 @@
             :allowEmpty="false"
           ></multiselect>
           <multiselect
-            class="my-2"
+            class="my-1"
             placeholder="Destination"
             v-model="station.to"
             :options="destinationData"
             label="text"
+            :searchable="false"
+            :show-labels="false"
+            :allowEmpty="false"
+          ></multiselect>
+          <multiselect
+            class="my-1"
+            placeholder="Time"
+            v-model="time.selected"
+            :options="time.options"
             :searchable="false"
             :show-labels="false"
             :allowEmpty="false"
