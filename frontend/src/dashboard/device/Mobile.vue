@@ -181,6 +181,34 @@ export default {
         return false
       }
     }
+  },
+  watch: {
+    station: {
+      handler() {
+        let fromIndex = this.station.from.value
+        let toIndex = this.station.to.value
+        if (
+          fromIndex !== toIndex &&
+          typeof fromIndex !== "undefined" &&
+          typeof toIndex !== "undefined"
+        )
+          this.doEstimate()
+      },
+      deep: true
+    },
+    time: {
+      handler() {
+        let fromIndex = this.station.from.value
+        let toIndex = this.station.to.value
+        if (
+          fromIndex !== toIndex &&
+          typeof fromIndex !== "undefined" &&
+          typeof toIndex !== "undefined"
+        )
+          this.doEstimate()
+      },
+      deep: true
+    }
   }
 }
 </script>
